@@ -19,7 +19,7 @@ currentYellow = 0   # Indicates whether yellow signal is on or off
 speeds = {'car':2.25, 'bike':2, 'scooter':1.5}  # average speeds of vehicles
 
 # Coordinates of vehicles' start
-x = {'right':[120,120,120], 'down':[1320,1320,1320], 'left':[1400,1400,1400], 'up':[0,0,0]}    
+x = {'right':[120,120,120], 'down':[1320,1320,1320], 'left':[600,600,600], 'up':[0,0,0]}    
 y = {'right':[0,0,0], 'down':[0,0,0], 'left':[670,670,670], 'up':[640,640,640]}
 
 vehicleTypes = {0:'car', 1:'bike', 2:'scooter'}
@@ -87,7 +87,7 @@ class Vehicle(pygame.sprite.Sprite):
         vehicles[direction][lane].append(self)
         self.index = len(vehicles[direction][lane]) - 1
         self.crossedIndex = 0
-        path = "images/" + direction + "/" + vehicleClass + ".png"
+        path = "images_new/" + direction + "/" + vehicleClass + ".png"
         self.originalImage = pygame.image.load(path)
         self.image = pygame.image.load(path)
 
@@ -144,7 +144,7 @@ class Vehicle(pygame.sprite.Sprite):
                             #self.y -= 2.8
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/up/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new/up/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -167,7 +167,7 @@ class Vehicle(pygame.sprite.Sprite):
                             #self.y += 10
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/down/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new/down/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -207,7 +207,7 @@ class Vehicle(pygame.sprite.Sprite):
                             self.y += 1.8
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/right/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new/right/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -227,7 +227,7 @@ class Vehicle(pygame.sprite.Sprite):
                             self.y += 2
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/left/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new/left/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -265,7 +265,7 @@ class Vehicle(pygame.sprite.Sprite):
                             self.y += 1.2
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/down/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new_new/down/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -285,7 +285,7 @@ class Vehicle(pygame.sprite.Sprite):
                             self.y -= 2.5
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/up/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new_new/up/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -323,7 +323,7 @@ class Vehicle(pygame.sprite.Sprite):
                             self.y -= 1.2
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/left/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new_new/left/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -343,7 +343,7 @@ class Vehicle(pygame.sprite.Sprite):
                             self.y -= 1
                             if(self.rotateAngle==90):
                                 self.turned = 1
-                                self.image = pygame.image.load("images/right/" + self.vehicleClass + ".png")
+                                self.image = pygame.image.load("images_new_new/right/" + self.vehicleClass + ".png")
                                 vehiclesTurned[self.direction][self.willTurn].append(self)
                                 self.crossedIndex = len(vehiclesTurned[self.direction][self.willTurn]) - 1
                         else:
@@ -476,15 +476,15 @@ class Main:
     screenSize = (screenWidth, screenHeight)
 
     # Setting background image i.e. image of intersection
-    background = pygame.image.load('images/map.png')
+    background = pygame.image.load('images_new/map.png')
 
     screen = pygame.display.set_mode(screenSize)
     pygame.display.set_caption("SIMULATION")
 
-    # Loading signal images and font
-    redSignal = pygame.image.load('images/signals/red.png')
-    yellowSignal = pygame.image.load('images/signals/yellow.png')
-    greenSignal = pygame.image.load('images/signals/green.png')
+    # Loading signal images_new and font
+    redSignal = pygame.image.load('images_new/signals/red.png')
+    yellowSignal = pygame.image.load('images_new/signals/yellow.png')
+    greenSignal = pygame.image.load('images_new/signals/green.png')
     font = pygame.font.Font(None, 30)
     thread2 = threading.Thread(name="generateVehicles",target=generateVehicles, args=())    # Generating vehicles
     thread2.daemon = True
