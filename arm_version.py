@@ -29,14 +29,17 @@ directionNumbers = {0:'right', 1:'down', 2:'left', 3:'up'}
 # Coordinates of signal image, timer, and vehicle count
 signalCoods = [(700,205),(600,250),(700,310),(790,255)]
 signalTimerCoods = [(720,180),(570,270),(720,390),(830,275)]
+PedCoods = [(600,155),(500,300),(870,290),(790,155)]
+StandCoods = [(600,185),(500,320),(870,320),(790,175)]
+WalkCoods = [(560,215),(550,350),(830,360),(840,205)]
 
 # Coordinates of stop lines
 stopLines = {'right': 600, 'down': 250, 'left': 840, 'up': 390}
 defaultStop = {'right': 580, 'down': 240, 'left': 850, 'up': 400}
 
 # Gap between vehicles
-stoppingGap = 20    # stopping gap
-movingGap = 40   # moving gap
+stoppingGap = 10    # stopping gap
+movingGap = 10   # moving gap
 
 # set allowed vehicle types here
 allowedVehicleTypes = {'car': True, 'bike': True, 'scooter': True}
@@ -45,10 +48,6 @@ vehiclesTurned = {'right': {1:[], 2:[]}, 'down': {1:[], 2:[]}, 'left': {1:[], 2:
 vehiclesNotTurned = {'right': {1:[], 2:[]}, 'down': {1:[], 2:[]}, 'left': {1:[], 2:[]}, 'up': {1:[], 2:[]}}
 rotationAngle = 3
 mid = {'right': {'x':590, 'y':300}, 'down': {'x':735, 'y':305}, 'left': {'x':600, 'y':345}, 'up': {'x':695, 'y':320}}
-# set random or default green signal time here 
-#randomGreenSignalTimer = True
-# set random green signal time range here 
-#randomGreenSignalTimerRange = [10,20]
 
 timeElapsed = 0
 simulationTime = 300
@@ -254,24 +253,8 @@ def initialize():
     signals.append(ts1)
     ts2 = TrafficSignal(ts1.red+ts1.yellow+ts1.green, defaultYellow, defaultGreen[1])
     signals.append(ts2)
-    #ts3 = TrafficSignal(0, defaultYellow, defaultGreen[2])
-    #signals.append(ts3)
-    #ts4 = TrafficSignal(ts1.red+ts1.yellow+ts1.green, defaultYellow, defaultGreen[3])
-    #signals.append(ts4)
     repeat()
 
-# Print the signal timers on cmd
-#def printStatus():
-#    for i in range(0, 4):
-#        if(signals[i] != None):
-#            if(i==currentGreen):
-#                if(currentYellow==0):
-#                    print(" GREEN TS",i+1,"-> r:",signals[i].red," y:",signals[i].yellow," g:",signals[i].green)
-#                else:
-#                    print("YELLOW TS",i+1,"-> r:",signals[i].red," y:",signals[i].yellow," g:",signals[i].green)
-#            else:
-#                print("   RED TS",i+1,"-> r:",signals[i].red," y:",signals[i].yellow," g:",signals[i].green)
-#    print()  
 
 def repeat():
     global currentGreen, currentYellow, nextGreen
@@ -290,10 +273,6 @@ def repeat():
         time.sleep(1)
     currentYellow = 0   # set yellow signal off
     
-    # reset all signal times of current signal to default/random times
-    #if(randomGreenSignalTimer):
-    #    signals[currentGreen].green = random.randint(randomGreenSignalTimerRange[0],randomGreenSignalTimerRange[1])
-    #else:
     signals[currentGreen].green = defaultGreen[currentGreen]
     signals[currentGreen].yellow = defaultYellow
     signals[currentGreen].red = defaultRed
@@ -373,6 +352,11 @@ class Main:
     redSignal = pygame.image.load('images/signals/red.png')
     yellowSignal = pygame.image.load('images/signals/yellow.png')
     greenSignal = pygame.image.load('images/signals/green.png')
+    redWalk = pygame.image.load('images/signals/red_walk.png')
+    greenWalk = pygame.image.load('images/signals/green_walk.png')
+    menStand = pygame.image.load('images/walk/men_stand.png')
+    menWalk = pygame.image.load('images/walk/men_walk.png')
+    
     font = pygame.font.Font(None, 30)
     thread2 = threading.Thread(name="generateVehicles",target=generateVehicles, args=())    # Generating vehicles
     thread2.daemon = True
@@ -394,23 +378,43 @@ class Main:
                 yellow_use = pygame.transform.flip(yellowSignal, True, False)
                 green_use = pygame.transform.flip(greenSignal, True, False)
                 red_use = pygame.transform.flip(redSignal, True, False)
+                green_walk_use = greenWalk
+                red_walk_use = redWalk
+                men_Walk_use = menWalk
+                men_Stand_use = menStand
             if i == 0:
                 yellow_use = yellowSignal
                 green_use = greenSignal
                 red_use = redSignal
+                green_walk_use = pygame.transform.flip(greenWalk, True, False)
+                red_walk_use = pygame.transform.flip(redWalk, True, False)
+                men_Walk_use = pygame.transform.flip(menWalk, True, False)
+                men_Stand_use = pygame.transform.flip(menStand, True, False)
             if(i==currentGreen):
                 if(currentYellow==1):
                     signals[i].signalText = signals[i].yellow
                     screen.blit(yellow_use, signalCoods[i])
                     screen.blit(yellow_use, signalCoods[i+2])
+                    screen.blit(red_walk_use, PedCoods[i])
+                    screen.blit(red_walk_use, PedCoods[i+2])
+                    screen.blit(men_Stand_use, StandCoods[i])
+                    screen.blit(men_Stand_use, StandCoods[i+2])
                 else:
                     signals[i].signalText = signals[i].green
                     screen.blit(green_use, signalCoods[i])
                     screen.blit(green_use, signalCoods[i+2])
+                    screen.blit(red_walk_use, PedCoods[i])
+                    screen.blit(red_walk_use, PedCoods[i+2])
+                    screen.blit(men_Stand_use, StandCoods[i])
+                    screen.blit(men_Stand_use, StandCoods[i+2])
             else:
                 signals[i].signalText = signals[i].red
                 screen.blit(red_use, signalCoods[i])
                 screen.blit(red_use, signalCoods[i+2])
+                screen.blit(green_walk_use, PedCoods[i])
+                screen.blit(green_walk_use, PedCoods[i+2])
+                screen.blit(men_Walk_use, WalkCoods[i])
+                screen.blit(men_Walk_use, WalkCoods[i+2])
         signalTexts = ["","","",""]
 
         # display signal timer
