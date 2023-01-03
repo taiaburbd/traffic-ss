@@ -336,6 +336,7 @@ class Main:
     # Colours 
     black = (0, 0, 0)
     white = (255, 255, 255)
+    blue = (0,255,255)
 
     # Screensize 
     screenWidth = 1400
@@ -419,7 +420,7 @@ class Main:
 
         # display signal timer
         for i in range(0,noOfSignals):  
-            signalTexts[i] = font.render(str(signals[i].signalText), True, white, black)
+            signalTexts[i] = font.render((str(' ')+str(signals[i].signalText)+str(' ')), True, blue, black)
             screen.blit(signalTexts[i],signalTimerCoods[i])
             screen.blit(signalTexts[i],signalTimerCoods[i+2])
 
