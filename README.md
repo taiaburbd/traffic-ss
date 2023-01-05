@@ -1,7 +1,9 @@
-# traffic-signal simulation and violation detection
+# Traffic light signal simulation and violation detection
 this software enginerring course project for MAIA 
 The main idea of this project is to create a simulation of traffic intersection and violation detection using Python.
 
+![map](https://user-images.githubusercontent.com/4978423/210773970-53e97305-e28f-4b95-af2f-56cff1477073.png)
+Main task
 1. Simulate the operation of a traffic light 
 2. Simulate the operation of a pedestrian light 
 3. Detect if a car is in violation or not
