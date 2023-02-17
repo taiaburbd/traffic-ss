@@ -17,3 +17,5 @@ Yellow light > stop unless you crossed the stop line before it turned yellow
 Green light > go if the way is clear
 
 Each traffic light has a timer that indicates the time remaining before the traffic light changes from green to yellow, yellow to red, or red to green.
+
+Base on <a href="https://towardsdatascience.com/traffic-intersection-simulation-using-pygame-689d6bd7687a" target="_blank">Traffic Intersection Simulation using Pygame<a/> system, 
